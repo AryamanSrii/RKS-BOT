@@ -1,5 +1,9 @@
 # RKS-BOT
 
+## About Bot
+
+RKS bot is a Discord Multi Functional Bot, it has 150+ commands and is perfect for any community, its chatbot and game features make it one of its kind with new updates every month. This bot is purely SFW and is easy to use, demo of all of its key features has been uploaded below, and the bot does come with easter eggs 😉
+
 
 ## Primary Language
 
