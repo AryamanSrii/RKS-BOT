@@ -12,6 +12,13 @@ RKS bot is a Discord Multi Functional Bot, it has 150+ commands and is perfect f
 ## Primary Library
 #### [Discord.py](https://discordpy.readthedocs.io/en/stable/)
 
+
+## General Demo with Voice
+
+
+https://user-images.githubusercontent.com/68835688/137729722-670ddd3d-bf31-438f-ac0e-ee1207e3e471.mp4
+
+
 ## Moderation Tools Demo
 
 https://user-images.githubusercontent.com/68835688/137697834-7e8ba8ba-d542-4a21-a4ba-ca578e81c492.mp4
