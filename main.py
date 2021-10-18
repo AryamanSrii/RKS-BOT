@@ -29,9 +29,13 @@ from discord.ext import commands, tasks
 from io import BytesIO
 import datetime
 from datetime import datetime
-import tweepy
-
-from discord.ext import commands
+from discord_slash import SlashCommand
+from discord_slash.utils.manage_commands import create_option
+from gtts import gTTS
+import aiohttp
+import asyncio
+import json
+import decimal
 intents = discord.Intents.default()
 
 from PIL import Image
@@ -41,19 +45,62 @@ intents.members = True
 
 client = commands.Bot(
     command_prefix=['r!','R!'],case_insensitive=True, intents=intents)
+slash = SlashCommand(client, sync_commands=True)
 
-c_key = (os.getenv("c.key"))
-c_secret = (os.getenv("c.secret"))
-key = (os.getenv("key"))
-secret = (os.getenv("secret"))
 
-auth = tweepy.OAuthHandler(c_key, c_secret)
-auth.set_access_token(key, secret)
+@slash.slash(name="tts",
+             description="Text to Audio",
+             options=[
+               create_option(
+                 name="sentence",
+                 description="Say Any sentence",
+                 option_type=3,
+                 required=True
+               )
+             ])
+async def tts(ctx, sentence):
+      myobj = gTTS(text=sentence, lang='en', slow=False)
+      language = 'en'
+      myobj.save("audio.mp3")
+      await ctx.send(file=discord.File('audio.mp3'))
 
-api = tweepy.API(auth)
 from io import BytesIO
 
+@slash.slash(name="Stat",
+             description="Command to check info for any coin.",
+             options=[
+               create_option(
+                 name="coin",
+                 description="Say Any Coin",
+                 option_type=3,
+                 required=True
+               )
+             ])
+async def stat(ctx, coin):
+  coin = coin
+  try: 
+      async with aiohttp.ClientSession() as r:
+          async with r.get(f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids={coin}") as r:
+           data = await r.json()
+           price = decimal.Decimal(data[0]["current_price"])
+           high = decimal.Decimal(data[0]["high_24h"])
+           low = decimal.Decimal(data[0]["low_24h"])
+           pc =  decimal.Decimal(data[0]["price_change_24h"])
 
+           embed = discord.Embed(title = f" Stats", description = f'Recent Stats of {coin}  ', colour = discord.Colour.blue()) 
+           embed.add_field(name= '💸 Price', value = f"{round(price, 10)} $", inline = False)
+           embed.add_field(name= '💷 Market Cap', value = f'{data[0]["market_cap"]}$', inline = False) 
+           embed.add_field(name= '📈 High 24hrs', value = f"{round(high, 10)}$", inline = False) 
+           embed.add_field(name= '📉 Low 24hrs ', value = f"{round(low, 10)}$", inline = False) 
+           embed.add_field(name= 'Price Change', value = f"{round(pc, 10)}$", inline = False) 
+           embed.add_field(name= 'Price Change %', value = f'{data[0]["price_change_percentage_24h"]}%', inline = True) 
+           embed.add_field(name= 'Market Cap Change', value = f'{data[0] ["market_cap_change_24h"]}$', inline = True) 
+           embed.add_field(name= 'Total Supply', value = f'{data[0]["total_supply"]}', inline = True) 
+           await ctx.send(embed = embed)
+  except:
+           embed = discord.Embed(title = "⚠️ Coin Not Found", colour = discord.Colour.blue()) 
+           embed.set_footer(text = "If You used Short forms like DOGE or BTC, please use their full names and try again")
+           await ctx.send(embed=embed)
 def time_encode(sec):
     time_type, newsec = 'seconds', int(sec)
     if sec > 60:
