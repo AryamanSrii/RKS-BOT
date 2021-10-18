@@ -26,3 +26,4 @@ https://user-images.githubusercontent.com/68835688/137697890-8d8f1bab-0cce-40d1-
 
 https://user-images.githubusercontent.com/68835688/137697892-b7cba42e-b9dd-45a2-b8cb-375bc65c000f.mp4
 
+[Click here to Invite](https://discord.com/api/oauth2/authorize?client_id=836461516601425941&permissions=2623011958&scope=bot%20applications.commands)
