@@ -552,27 +552,6 @@ async def dev_info(ctx):
     await ctx.send(embed=embed)
 
 
-@client.command()
-async def gm(ctx):
-    await ctx.send("good morning,have a great day")
-
-
-@client.command()
-async def wassup(ctx):
-    await ctx.send("I am Bored, what about you?")
-
-
-@client.command(aliases=["Good Morning"])
-async def good_morning(ctx):
-    await ctx.send("Good Morning")
-
-
-@client.command()
-async def bored(ctx):
-    await ctx.send(
-        "Here are somethings you can do https://www.arkadium.com/free-online-games/ or listen to some songs? https://www.spotify.com/in/ or maybe some videos https://www.youtube.com/"
-    )
-
 
 @client.command()
 async def rule1(ctx):
